@@ -50,4 +50,7 @@ class StringCalculatorTest < Minitest::Test
     def test_addition_with_delimiters
         assert_equal 14, StringCalculator.addition("//;\n6;8")
     end
+    def test_add_with_negative_number_raises_exception
+        assert_raises(RuntimeError) { StringCalculator.addition("5,-9") }
+    end
 end
