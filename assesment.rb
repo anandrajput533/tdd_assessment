@@ -50,7 +50,13 @@ class StringCalculatorTest < Minitest::Test
     def test_addition_with_delimiters
         assert_equal 14, StringCalculator.addition("//;\n6;8")
     end
-    def test_add_with_negative_number_raises_exception
+    # Test for adding with negetive numbers
+    def test_addition_with_negative_number_raises_exception
         assert_raises(RuntimeError) { StringCalculator.addition("5,-9") }
     end
+    # Test for adding with multiple negetive numbers
+    def test_addition_with_multiple_negative_numbers_raises_exception_and_shows_message
+        exception = assert_raises(RuntimeError) { StringCalculator.addition("5,-7,-8") }
+        assert_match /negative values not allowed: -7, -8/, exception.message
+      end
 end
