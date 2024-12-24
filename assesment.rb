@@ -3,7 +3,13 @@ require 'minitest/autorun'
 class StringCalculator
   def self.addition(values)
     return 0 if values.empty?
-    values.split(/,|\n/).map(&:to_i).sum
+    if values.start_with?("//")
+        delimiter, values = values[2..].split("\n", 2)
+        values = values.split(/#{Regexp.escape(delimiter)}|\n/)
+      else
+        values = values.split(/,|\n/)
+      end
+      values.map(&:to_i).sum      
   end
 end
 # 
@@ -11,7 +17,7 @@ puts StringCalculator.addition("") # => 0
 puts StringCalculator.addition("2") # => 2
 puts StringCalculator.addition("3,5") # => 8
 puts StringCalculator.addition("6\n4,8") # => 18
-puts StringCalculator.addition("5,6,7,8,9")
+puts StringCalculator.addition("5,6,7,8,9")# => 35
 #  test Cases
 class StringCalculatorTest < Minitest::Test
   # Test for adding with an empty string.
